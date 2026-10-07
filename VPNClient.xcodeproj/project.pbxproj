@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+/* Begin PBXBuildFile section */
+		E00000000000000000000101 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000100 /* AppModel.swift */; };
+		E00000000000000000000103 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000102 /* Components.swift */; };
+		E00000000000000000000105 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000104 /* HomeView.swift */; };
+		E00000000000000000000107 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000106 /* ImportView.swift */; };
+		E00000000000000000000109 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000108 /* ProfileStore.swift */; };
+		E0000000000000000000010B /* QrScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000010A /* QrScanView.swift */; };
+		E0000000000000000000010D /* ServersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000010C /* ServersView.swift */; };
+		E0000000000000000000010F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000010E /* SettingsView.swift */; };
+		E00000000000000000000111 /* SupportChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000110 /* SupportChat.swift */; };
+		E00000000000000000000113 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000112 /* Theme.swift */; };
+		E00000000000000000000115 /* TunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000114 /* TunnelController.swift */; };
+		E00000000000000000000117 /* VPNClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000116 /* VPNClientApp.swift */; };
+		E00000000000000000000119 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000118 /* AppGroup.swift */; };
+		E0000000000000000000011B /* KeyImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000011A /* KeyImport.swift */; };
+		E0000000000000000000011D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000011C /* PacketTunnelProvider.swift */; };
+		E0000000000000000000011E /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000118 /* AppGroup.swift */; };
+		E0000000000000000000011F /* KeyImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000011A /* KeyImport.swift */; };
+		E00000000000000000000121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000120 /* Assets.xcassets */; };
+		E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E00000000000000000000122 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+/* Begin PBXFileReference section */
+		E00000000000000000000123 /* VPNClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPNClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E00000000000000000000122 /* PacketTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E00000000000000000000100 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		E00000000000000000000102 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		E00000000000000000000104 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E00000000000000000000106 /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		E00000000000000000000108 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		E0000000000000000000010A /* QrScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScanView.swift; sourceTree = "<group>"; };
+		E0000000000000000000010C /* ServersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersView.swift; sourceTree = "<group>"; };
+		E0000000000000000000010E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E00000000000000000000110 /* SupportChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportChat.swift; sourceTree = "<group>"; };
+		E00000000000000000000112 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		E00000000000000000000114 /* TunnelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelController.swift; sourceTree = "<group>"; };
+		E00000000000000000000116 /* VPNClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNClientApp.swift; sourceTree = "<group>"; };
+		E00000000000000000000118 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		E0000000000000000000011A /* KeyImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImport.swift; sourceTree = "<group>"; };
+		E0000000000000000000011C /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		E00000000000000000000120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+/* Begin PBXGroup section */
+		E00000000000000000000021 /* VPNClient */ = {
+			isa = PBXGroup;
+			children = (
+				E00000000000000000000100 /* AppModel.swift */,
+				E00000000000000000000102 /* Components.swift */,
+				E00000000000000000000104 /* HomeView.swift */,
+				E00000000000000000000106 /* ImportView.swift */,
+				E00000000000000000000108 /* ProfileStore.swift */,
+				E0000000000000000000010A /* QrScanView.swift */,
+				E0000000000000000000010C /* ServersView.swift */,
+				E0000000000000000000010E /* SettingsView.swift */,
+				E00000000000000000000110 /* SupportChat.swift */,
+				E00000000000000000000112 /* Theme.swift */,
+				E00000000000000000000114 /* TunnelController.swift */,
+				E00000000000000000000116 /* VPNClientApp.swift */,
+				E00000000000000000000120 /* Assets.xcassets */,
+			);
+			path = VPNClient;
+			sourceTree = "<group>";
+		};
+		E00000000000000000000022 /* PacketTunnel */ = {
+			isa = PBXGroup;
+			children = (
+				E0000000000000000000011C /* PacketTunnelProvider.swift */,
+			);
+			path = PacketTunnel;
+			sourceTree = "<group>";
+		};
+		E00000000000000000000023 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E00000000000000000000118 /* AppGroup.swift */,
+				E0000000000000000000011A /* KeyImport.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E00000000000000000000024 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E00000000000000000000123 /* VPNClient.app */,
+				E00000000000000000000122 /* PacketTunnel.appex */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+		E00000000000000000000025 /* VPN Client */ = {
+			isa = PBXGroup;
+			children = (
+				E00000000000000000000021 /* VPNClient */,
+				E00000000000000000000022 /* PacketTunnel */,
+				E00000000000000000000023 /* Shared */,
+				E00000000000000000000024 /* Products */,
+			);
+			name = "VPN Client";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+/* Begin PBXSourcesBuildPhase section */
+		E00000000000000000000031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E00000000000000000000101 /* AppModel.swift in Sources */,
+				E00000000000000000000103 /* Components.swift in Sources */,
+				E00000000000000000000105 /* HomeView.swift in Sources */,
+				E00000000000000000000107 /* ImportView.swift in Sources */,
+				E00000000000000000000109 /* ProfileStore.swift in Sources */,
+				E0000000000000000000010B /* QrScanView.swift in Sources */,
+				E0000000000000000000010D /* ServersView.swift in Sources */,
+				E0000000000000000000010F /* SettingsView.swift in Sources */,
+				E00000000000000000000111 /* SupportChat.swift in Sources */,
+				E00000000000000000000113 /* Theme.swift in Sources */,
+				E00000000000000000000115 /* TunnelController.swift in Sources */,
+				E00000000000000000000117 /* VPNClientApp.swift in Sources */,
+				E00000000000000000000119 /* AppGroup.swift in Sources */,
+				E0000000000000000000011B /* KeyImport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000032 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0000000000000000000011D /* PacketTunnelProvider.swift in Sources */,
+				E0000000000000000000011E /* AppGroup.swift in Sources */,
+				E0000000000000000000011F /* KeyImport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+/* Begin PBXResourcesBuildPhase section */
+		E00000000000000000000033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E00000000000000000000121 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+/* Begin PBXCopyFilesBuildPhase section */
+		E00000000000000000000034 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+/* Begin PBXFrameworksBuildPhase section */
+		E00000000000000000000035 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000036 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+/* Begin PBXNativeTarget section */
+		E00000000000000000000002 /* VPNClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00000000000000000000041 /* Build configuration list for PBXNativeTarget "VPNClient" */;
+			buildPhases = (
+				E00000000000000000000031 /* Sources */,
+				E00000000000000000000035 /* Frameworks */,
+				E00000000000000000000033 /* Resources */,
+				E00000000000000000000034 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E00000000000000000000051 /* PBXTargetDependency */,
+			);
+			name = VPNClient;
+			productName = VPNClient;
+			productReference = E00000000000000000000123 /* VPNClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E00000000000000000000003 /* PacketTunnel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00000000000000000000042 /* Build configuration list for PBXNativeTarget "PacketTunnel" */;
+			buildPhases = (
+				E00000000000000000000032 /* Sources */,
+				E00000000000000000000036 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PacketTunnel;
+			productName = PacketTunnel;
+			productReference = E00000000000000000000122 /* PacketTunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+/* Begin PBXProject section */
+		E00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E00000000000000000000002 = { CreatedOnToolsVersion = 16.0; };
+					E00000000000000000000003 = { CreatedOnToolsVersion = 16.0; };
+				};
+			};
+			buildConfigurationList = E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = ru;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				ru,
+				Base,
+			);
+			mainGroup = E00000000000000000000025;
+			productRefGroup = E00000000000000000000024;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E00000000000000000000002 /* VPNClient */,
+				E00000000000000000000003 /* PacketTunnel */,
+			);
+		};
+/* End PBXProject section */
+/* Begin PBXContainerItemProxy section */
+		E00000000000000000000052 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E00000000000000000000003;
+			remoteInfo = PacketTunnel;
+		};
+/* End PBXContainerItemProxy section */
+/* Begin PBXTargetDependency section */
+		E00000000000000000000051 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E00000000000000000000003 /* PacketTunnel */;
+			targetProxy = E00000000000000000000052 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+/* Begin XCBuildConfiguration section */
+		E00000000000000000000061 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+
+			};
+			name = Debug;
+		};
+		E00000000000000000000062 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+								SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+
+			};
+			name = Release;
+		};
+		E00000000000000000000063 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = VPNClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-framework NetworkExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = VPN;
+
+			};
+			name = Debug;
+		};
+		E00000000000000000000064 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = VPNClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-framework NetworkExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = VPN;
+
+			};
+			name = Release;
+		};
+		E00000000000000000000065 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-framework NetworkExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client.tunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+
+			};
+			name = Debug;
+		};
+		E00000000000000000000066 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+
+				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-framework NetworkExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client.tunnel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+/* Begin XCConfigurationList section */
+		E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E00000000000000000000061 /* Debug */,
+				E00000000000000000000062 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E00000000000000000000041 /* Build configuration list for PBXNativeTarget "VPNClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E00000000000000000000063 /* Debug */,
+				E00000000000000000000064 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E00000000000000000000042 /* Build configuration list for PBXNativeTarget "PacketTunnel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E00000000000000000000065 /* Debug */,
+				E00000000000000000000066 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E00000000000000000000001 /* Project object */;
+}
