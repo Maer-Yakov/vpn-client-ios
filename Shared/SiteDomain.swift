@@ -9,24 +9,26 @@ enum SiteDomain {
             throw SiteDomainError.message("Введите домен сайта")
         }
 
-        let components = URLComponents(string: value.contains("://") ? value : "https://\(value)")
-        guard let components, let scheme = components.scheme?.lowercased(), scheme == "http" || scheme == "https" else {
+        guard let parsed = URLComponents(string: value.contains("://") ? value : "https://\(value)"),
+              let scheme = parsed.scheme?.lowercased(),
+              scheme == "http" || scheme == "https" else {
             throw SiteDomainError.message("Укажите домен, например example.com")
         }
-        if components.user != nil || components.password != nil {
+        if parsed.user != nil || parsed.password != nil {
             throw SiteDomainError.message("Вместо ссылки укажите только домен сайта")
         }
 
-        let rawHost = components.host
-            ?? components.percentEncodedHost
+        let rawHost = parsed.host
+            ?? parsed.percentEncodedHost
             ?? value.split(separator: "/").first.map(String.init)
-        guard var host = rawHost?.trimmingCharacters(in: CharacterSet(charactersIn: ".")).lowercased(), !host.isEmpty else {
+        guard let trimmedHost = rawHost?.trimmingCharacters(in: CharacterSet(charactersIn: ".")).lowercased(),
+              !trimmedHost.isEmpty else {
             throw SiteDomainError.message("Не удалось определить домен")
         }
-        guard let ascii = host.idnaEncoded else {
+        guard let ascii = trimmedHost.idnaEncoded else {
             throw SiteDomainError.message("Некорректный домен сайта")
         }
-        host = ascii.trimmingCharacters(in: CharacterSet(charactersIn: ".")).lowercased()
+        let host = ascii.trimmingCharacters(in: CharacterSet(charactersIn: ".")).lowercased()
 
         guard (1...253).contains(host.count), host.contains(".") else {
             throw SiteDomainError.message("Укажите полное доменное имя")
