@@ -2,8 +2,9 @@
 {
 	archiveVersion = 1;
 	classes = {};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		E00000000000000000000101 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000100 /* AppModel.swift */; };
 		E00000000000000000000103 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000102 /* Components.swift */; };
@@ -37,7 +38,9 @@
 		E00000000000000000000213 /* SplitTunnelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000212 /* SplitTunnelView.swift */; };
 		E00000000000000000000216 /* SubscriptionExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000200 /* SubscriptionExpiry.swift */; };
 		E00000000000000000000217 /* SiteDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000202 /* SiteDomain.swift */; };
+		E00000000000000000000301 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000311 /* WireGuardKit */; };
 /* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E00000000000000000000123 /* VPNClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPNClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E00000000000000000000122 /* PacketTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +71,25 @@
 		E00000000000000000000210 /* BackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
 		E00000000000000000000212 /* SplitTunnelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTunnelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E00000000000000000000035 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000036 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E00000000000000000000301 /* WireGuardKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		E00000000000000000000021 /* VPNClient */ = {
 			isa = PBXGroup;
@@ -122,7 +144,7 @@
 				E00000000000000000000123 /* VPNClient.app */,
 				E00000000000000000000122 /* PacketTunnel.appex */,
 			);
-			name = "Products";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		E00000000000000000000025 /* VPN Client */ = {
@@ -137,6 +159,126 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		E00000000000000000000320 /* WireGuardGoBridgeiOS */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "DESTDIR=$(PROJECT_DIR)/Vendor/amneziawg-apple/Sources/WireGuardKitGo/out $(ACTION)";
+			buildConfigurationList = E00000000000000000000340 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)/Vendor/amneziawg-apple/Sources/WireGuardKitGo";
+			dependencies = (
+			);
+			name = WireGuardGoBridgeiOS;
+			passBuildSettingsInEnvironment = 1;
+			productName = WireGuardGoBridgeiOS;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXNativeTarget section */
+		E00000000000000000000002 /* VPNClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00000000000000000000041 /* Build configuration list for PBXNativeTarget "VPNClient" */;
+			buildPhases = (
+				E00000000000000000000031 /* Sources */,
+				E00000000000000000000035 /* Frameworks */,
+				E00000000000000000000033 /* Resources */,
+				E00000000000000000000034 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E00000000000000000000051 /* PBXTargetDependency */,
+			);
+			name = VPNClient;
+			productName = VPNClient;
+			productReference = E00000000000000000000123 /* VPNClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E00000000000000000000003 /* PacketTunnel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00000000000000000000042 /* Build configuration list for PBXNativeTarget "PacketTunnel" */;
+			buildPhases = (
+				E00000000000000000000032 /* Sources */,
+				E00000000000000000000036 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E00000000000000000000322 /* PBXTargetDependency */,
+			);
+			name = PacketTunnel;
+			packageProductDependencies = (
+				E00000000000000000000311 /* WireGuardKit */,
+			);
+			productName = PacketTunnel;
+			productReference = E00000000000000000000122 /* PacketTunnel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E00000000000000000000002 = { CreatedOnToolsVersion = 16.0; };
+					E00000000000000000000003 = { CreatedOnToolsVersion = 16.0; };
+					E00000000000000000000320 = { CreatedOnToolsVersion = 16.0; };
+				};
+			};
+			buildConfigurationList = E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = ru;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				ru,
+				Base,
+			);
+			mainGroup = E00000000000000000000025;
+			packageReferences = (
+				E00000000000000000000310 /* XCLocalSwiftPackageReference "Vendor/amneziawg-apple" */,
+			);
+			productRefGroup = E00000000000000000000024 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E00000000000000000000002 /* VPNClient */,
+				E00000000000000000000003 /* PacketTunnel */,
+				E00000000000000000000320 /* WireGuardGoBridgeiOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E00000000000000000000033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E00000000000000000000121 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E00000000000000000000034 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E00000000000000000000031 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -183,111 +325,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-/* Begin PBXResourcesBuildPhase section */
-		E00000000000000000000033 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E00000000000000000000121 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-/* Begin PBXCopyFilesBuildPhase section */
-		E00000000000000000000034 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-/* Begin PBXFrameworksBuildPhase section */
-		E00000000000000000000035 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E00000000000000000000036 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-/* Begin PBXNativeTarget section */
-		E00000000000000000000002 /* VPNClient */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E00000000000000000000041 /* Build configuration list for PBXNativeTarget "VPNClient" */;
-			buildPhases = (
-				E00000000000000000000031 /* Sources */,
-				E00000000000000000000035 /* Frameworks */,
-				E00000000000000000000033 /* Resources */,
-				E00000000000000000000034 /* Embed Foundation Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E00000000000000000000051 /* PBXTargetDependency */,
-			);
-			name = VPNClient;
-			productName = VPNClient;
-			productReference = E00000000000000000000123 /* VPNClient.app */;
-			productType = "com.apple.product-type.application";
-		};
-		E00000000000000000000003 /* PacketTunnel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E00000000000000000000042 /* Build configuration list for PBXNativeTarget "PacketTunnel" */;
-			buildPhases = (
-				E00000000000000000000032 /* Sources */,
-				E00000000000000000000036 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PacketTunnel;
-			productName = PacketTunnel;
-			productReference = E00000000000000000000122 /* PacketTunnel.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-/* End PBXNativeTarget section */
-/* Begin PBXProject section */
-		E00000000000000000000001 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-					E00000000000000000000002 = { CreatedOnToolsVersion = 16.0; };
-					E00000000000000000000003 = { CreatedOnToolsVersion = 16.0; };
-				};
-			};
-			buildConfigurationList = E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */;
-			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = ru;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				ru,
-				Base,
-			);
-			mainGroup = E00000000000000000000025;
-			productRefGroup = E00000000000000000000024;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				E00000000000000000000002 /* VPNClient */,
-				E00000000000000000000003 /* PacketTunnel */,
-			);
-		};
-/* End PBXProject section */
+
 /* Begin PBXContainerItemProxy section */
 		E00000000000000000000052 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -296,24 +334,38 @@
 			remoteGlobalIDString = E00000000000000000000003;
 			remoteInfo = PacketTunnel;
 		};
+		E00000000000000000000321 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E00000000000000000000320;
+			remoteInfo = WireGuardGoBridgeiOS;
+		};
 /* End PBXContainerItemProxy section */
+
 /* Begin PBXTargetDependency section */
 		E00000000000000000000051 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E00000000000000000000003 /* PacketTunnel */;
 			targetProxy = E00000000000000000000052 /* PBXContainerItemProxy */;
 		};
+		E00000000000000000000322 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E00000000000000000000320 /* WireGuardGoBridgeiOS */;
+			targetProxy = E00000000000000000000321 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		E00000000000000000000061 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -323,80 +375,76 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Debug;
 		};
 		E00000000000000000000062 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
-								SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};
 		E00000000000000000000063 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = VPNClient/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
-
 			};
 			name = Debug;
 		};
 		E00000000000000000000064 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = VPNClient/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
-
 			};
 			name = Release;
 		};
 		E00000000000000000000065 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -406,17 +454,16 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
-
 			};
 			name = Debug;
 		};
 		E00000000000000000000066 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -426,11 +473,29 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
-
+			};
+			name = Release;
+		};
+		E00000000000000000000341 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURE_OTHER_CFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E00000000000000000000342 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURE_OTHER_CFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
+
 /* Begin XCConfigurationList section */
 		E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */ = {
 			isa = XCConfigurationList;
@@ -459,7 +524,31 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E00000000000000000000340 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E00000000000000000000341 /* Debug */,
+				E00000000000000000000342 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		E00000000000000000000310 /* XCLocalSwiftPackageReference "Vendor/amneziawg-apple" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Vendor/amneziawg-apple;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E00000000000000000000311 /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00000000000000000000310 /* XCLocalSwiftPackageReference "Vendor/amneziawg-apple" */;
+			productName = WireGuardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E00000000000000000000001 /* Project object */;
 }

@@ -4,3 +4,5 @@ build/
 xcuserdata/
 .DS_Store
 *.moved-aside
+Vendor/amneziawg-apple/Sources/WireGuardKitGo/out/
+Vendor/amneziawg-apple/Sources/WireGuardKitGo/.tmp/

@@ -59,7 +59,16 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 }
 
-enum PacketTunnelError: Error {
+enum PacketTunnelError: Error, LocalizedError {
     case missingConfig
     case backendMissing
+
+    var errorDescription: String? {
+        switch self {
+        case .missingConfig:
+            return "Не найден файл конфигурации VPN"
+        case .backendMissing:
+            return "Не подключён WireGuardKit (AmneziaWG). Соберите WireGuardGoBridgeiOS и проверьте пакет Vendor/amneziawg-apple"
+        }
+    }
 }

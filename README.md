@@ -24,12 +24,13 @@ OpenVPN, XRay и установка сервера сюда не входят. �
 
 Проект рассчитан на Mac с Xcode 16. На Windows его нельзя собрать и поставить на iPhone: Apple отдаёт подпись и Network Extension только через Xcode.
 
-1. Откройте `VPNClient.xcodeproj`.
-2. В обоих target укажите свою команду разработчика.
-3. Включите capability **Network Extensions → Packet Tunnel** и App Group `group.app.vpnadmin.client` у приложения и у расширения.
-4. Подключите туннель AmneziaWG, не обычный WireGuard: пакет [amneziawg-apple](https://github.com/amnezia-vpn/amneziawg-apple), продукт `WireGuardKit`. Обычный WireGuard не понимает параметры AmneziaWG 3.
-5. Соберите схему VPNClient на устройство. Симулятор VPN-туннель не поднимает.
+1. Установите на Mac **Xcode 16** и **Go** (`brew install go`). Go нужен target’у `WireGuardGoBridgeiOS`, который собирает `libwg-go.a`.
+2. Откройте `VPNClient.xcodeproj`.
+3. В target **VPNClient** и **PacketTunnel** укажите свою команду разработчика.
+4. Включите capability **Network Extensions → Packet Tunnel** и App Group `group.app.vpnadmin.client` у приложения и у расширения.
+5. Пакет AmneziaWG уже в репозитории: локальный SPM `Vendor/amneziawg-apple` (продукт `WireGuardKit`) и external target `WireGuardGoBridgeiOS`. Обычный WireGuard из App Store / zx2c4 не подставляйте — он не понимает параметры AmneziaWG 3.
+6. Соберите схему **VPNClient** на **реальное устройство**. Симулятор UI покажет, но VPN-туннель не поднимает.
 
-Пока `WireGuardKit` не подключён, расширение не включает туннель и не забирает интернет телефона. После подключения пакета тот же код вызывает `WireGuardAdapter`.
+При первой сборке Xcode сам соберёт Go-bridge, затем `PacketTunnel` линкует `WireGuardKit` и вызывает `WireGuardAdapter`. Если видите `backendMissing` — не собрался `WireGuardGoBridgeiOS` или на Mac нет `go` в `PATH`.
 
 Минимальная версия iOS — 16. Версия приложения — 1.7.0 (как Android v1.7.0).
