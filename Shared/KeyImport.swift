@@ -8,6 +8,8 @@ struct ImportedKey: Equatable {
     var address: String
     var dns: String
     var protocolName: String
+    var expiresAtMillis: Int64? = nil
+    var panelUrl: String? = nil
 }
 
 enum KeyImportError: Error {
@@ -16,6 +18,7 @@ enum KeyImportError: Error {
     case damaged
     case unsupported
     case incomplete
+    case tooLarge
 }
 
 extension KeyImportError: LocalizedError {
@@ -31,6 +34,8 @@ extension KeyImportError: LocalizedError {
             return "Этот ключ не поддерживается"
         case .incomplete:
             return "В ключе не хватает данных"
+        case .tooLarge:
+            return "Ключ слишком большой"
         }
     }
 }
@@ -38,8 +43,12 @@ extension KeyImportError: LocalizedError {
 enum KeyImport {
     private static let uriPattern = try! NSRegularExpression(pattern: "vpn://[A-Za-z0-9_\\-=]+")
     private static let obfuscation = ["Jc", "Jmin", "Jmax", "S1", "S2", "H1", "I1"]
+    private static let maxImportChars = 512 * 1024
 
     static func parse(_ raw: String) throws -> ImportedKey {
+        if raw.count > maxImportChars {
+            throw KeyImportError.tooLarge
+        }
         let text = raw.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\u{FEFF}", with: "")
         if text.isEmpty {
             throw KeyImportError.empty
@@ -61,13 +70,16 @@ enum KeyImport {
         let title = decoded?.title.nilIfBlank ?? titleFromConf(conf)
         let address = field(conf, "Address").split(separator: "/").first.map(String.init)?
             .split(separator: ",").first.map { $0.trimmingCharacters(in: .whitespaces) } ?? ""
+        let expiresAt = decoded?.expiresAtMillis ?? expiresAtFromConf(conf)
         return ImportedKey(
             title: title,
             conf: conf,
             endpoint: field(conf, "Endpoint"),
             address: address,
             dns: field(conf, "DNS").nilIfBlank ?? "—",
-            protocolName: obfuscation.contains(where: { !field(conf, $0).isEmpty }) ? "AmneziaWG" : "WireGuard"
+            protocolName: obfuscation.contains(where: { !field(conf, $0).isEmpty }) ? "AmneziaWG" : "WireGuard",
+            expiresAtMillis: expiresAt,
+            panelUrl: decoded?.panelUrl
         )
     }
 
@@ -88,7 +100,7 @@ enum KeyImport {
         return String(text[span])
     }
 
-    private static func decodeVPNURI(_ uri: String) throws -> (title: String, conf: String) {
+    private static func decodeVPNURI(_ uri: String) throws -> (title: String, conf: String, expiresAtMillis: Int64?, panelUrl: String?) {
         var payload = String(uri.dropFirst("vpn://".count))
         let remainder = payload.count % 4
         if remainder != 0 {
@@ -123,7 +135,7 @@ enum KeyImport {
         return Data(bytes: destination, count: written)
     }
 
-    private static func extractConf(_ json: String) throws -> (title: String, conf: String) {
+    private static func extractConf(_ json: String) throws -> (title: String, conf: String, expiresAtMillis: Int64?, panelUrl: String?) {
         guard let data = json.data(using: .utf8),
               let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw KeyImportError.damaged
@@ -131,6 +143,12 @@ enum KeyImport {
         let description = (root["description"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let name = (root["name"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let title = description.nilIfBlank ?? name
+        let expiresRaw = (root["expiresAt"] as? String)?.nilIfBlank ?? (root["expires_at"] as? String)
+        let expiresAt = SubscriptionExpiry.parseIsoToMillis(expiresRaw)
+        let panelRaw = ((root["panelUrl"] as? String) ?? (root["panel_url"] as? String) ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        let panelUrl = panelRaw.nilIfBlank
         guard let containers = root["containers"] as? [Any] else {
             throw KeyImportError.unrecognized
         }
@@ -159,7 +177,20 @@ enum KeyImport {
         if bestConf.isEmpty || bestRank > 1 {
             throw KeyImportError.unsupported
         }
-        return (title, bestConf)
+        return (title, bestConf, expiresAt ?? expiresAtFromConf(bestConf), panelUrl)
+    }
+
+    private static func expiresAtFromConf(_ conf: String) -> Int64? {
+        for raw in conf.split(separator: "\n", omittingEmptySubsequences: false) {
+            let line = raw.trimmingCharacters(in: .whitespaces)
+            if line.isEmpty { continue }
+            let body = line.hasPrefix("#") ? String(line.dropFirst()).trimmingCharacters(in: .whitespaces) : line
+            guard let eq = body.firstIndex(of: "="), eq != body.startIndex else { continue }
+            let name = body[..<eq].trimmingCharacters(in: .whitespaces)
+            if name.caseInsensitiveCompare("ExpiresAt") != .orderedSame { continue }
+            return SubscriptionExpiry.parseIsoToMillis(String(body[body.index(after: eq)...]).trimmingCharacters(in: .whitespaces))
+        }
+        return nil
     }
 
     private static func requireField(_ conf: String, _ name: String) throws {

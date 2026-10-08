@@ -5,7 +5,11 @@ struct HomeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TopBar(title: "VPN", action: "Настройки") {
+            TopBar(
+                title: "Mvpn",
+                action: "Настройки",
+                splitTunnelEnabled: model.active?.splitTunnel.isEnabled == true
+            ) {
                 model.show(.settings)
             }
             Spacer()
@@ -22,8 +26,15 @@ struct HomeView: View {
             )
             Text(statusText)
                 .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(model.phase == .connected ? PanelColor.online : PanelColor.text)
+                .foregroundStyle(statusColor)
+                .multilineTextAlignment(.center)
                 .padding(.top, 22)
+            if model.phase == .connected, let connectedStatus, connectedStatus.warning, let date = connectedStatus.date {
+                Text(date)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(PanelColor.danger)
+                    .padding(.top, 6)
+            }
             if model.phase == .connected {
                 Text(elapsedLabel(since: model.connectedSince, now: model.now))
                     .font(.system(size: 16))
@@ -70,6 +81,27 @@ struct HomeView: View {
                         .foregroundStyle(PanelColor.text)
                 }
             }
+            PanelCard {
+                if !model.claimingTrial {
+                    model.claimTrial()
+                }
+            } content: {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Тестовый сервер")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(PanelColor.text)
+                    Text(model.claimingTrial ? "Получаем ключ…" : "1 день, скорость 1 Мбит/с.")
+                        .font(.system(size: 13))
+                        .foregroundStyle(PanelColor.muted)
+                }
+            }
+            if let notice = model.notice {
+                Text(notice)
+                    .font(.system(size: 13))
+                    .foregroundStyle(PanelColor.accent)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 10)
+            }
             if let error = model.error {
                 Text(error)
                     .font(.system(size: 13))
@@ -88,6 +120,14 @@ struct HomeView: View {
         .padding(.vertical, 12)
     }
 
+    private var connectedStatus: SubscriptionExpiry.ConnectedStatus? {
+        guard model.phase == .connected else { return nil }
+        return SubscriptionExpiry.connectedStatus(
+            expiresAtMillis: model.active?.key.expiresAtMillis,
+            nowMillis: Int64(model.now.timeIntervalSince1970 * 1000)
+        )
+    }
+
     private var statusText: String {
         switch model.phase {
         case .idle:
@@ -95,7 +135,14 @@ struct HomeView: View {
         case .connecting:
             return "Подключение"
         case .connected:
-            return "Подключено"
+            return connectedStatus?.title ?? "Подключено"
         }
+    }
+
+    private var statusColor: Color {
+        if model.phase == .connected, connectedStatus?.warning == true {
+            return PanelColor.danger
+        }
+        return model.phase == .connected ? PanelColor.online : PanelColor.text
     }
 }

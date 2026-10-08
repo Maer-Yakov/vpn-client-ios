@@ -23,15 +23,19 @@ final class TunnelController: ObservableObject {
         manager?.connection.status == .connected
     }
 
-    func connect(conf: String, endpoint: String) async throws {
-        try AppGroup.saveConfig(conf)
+    func connect(conf: String, endpoint: String, splitTunnel: SplitTunnelSettings = SplitTunnelSettings()) async throws {
+        let routedConf = try splitTunnel.applyTo(conf)
+        let exclusions = try SiteRouteResolver.resolve(domains: splitTunnel.bypassDomains)
+        let finalConf = try RouteExclusions.apply(exclusions: exclusions, to: routedConf)
+        try AppGroup.saveConfig(finalConf)
+        try AppGroup.saveBypassRoutes(exclusions)
         let manager = try await loadOrCreate()
         let proto = NETunnelProviderProtocol()
         proto.providerBundleIdentifier = Self.providerBundle
         proto.serverAddress = endpoint.isEmpty ? "VPN" : endpoint
         proto.providerConfiguration = ["hasConfig": NSNumber(value: true)]
         manager.protocolConfiguration = proto
-        manager.localizedDescription = "VPN"
+        manager.localizedDescription = "Mvpn"
         manager.isEnabled = true
         try await save(manager)
         try await reload(manager)
@@ -139,6 +143,9 @@ struct TrafficSnapshot {
 
 enum TunnelMessage {
     static func userText(_ error: Error) -> String {
+        if let localized = (error as? LocalizedError)?.errorDescription, !localized.isEmpty {
+            return localized
+        }
         if error is AppGroupError {
             return "Не удалось подготовить подключение"
         }

@@ -4,27 +4,38 @@ import SwiftUI
 struct VPNClientApp: App {
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
+    @State private var showStartup = true
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environmentObject(model)
-                .preferredColorScheme(.dark)
-                .background(PanelColor.bg.ignoresSafeArea())
-                .onOpenURL { url in
-                    model.importText(url.absoluteString)
-                }
-                .onChange(of: scenePhase) { phase in
-                    if phase == .active {
-                        model.refreshConnection()
+            ZStack {
+                RootView()
+                    .environmentObject(model)
+                    .preferredColorScheme(.dark)
+                    .background(PanelColor.bg.ignoresSafeArea())
+                    .onOpenURL { url in
+                        model.importText(url.absoluteString)
                     }
-                }
-                .task {
-                    while !Task.isCancelled {
-                        try? await Task.sleep(nanoseconds: 1_000_000_000)
-                        await model.tickClock()
+                    .onChange(of: scenePhase) { phase in
+                        if phase == .active {
+                            model.refreshConnection()
+                        }
                     }
+                    .task {
+                        while !Task.isCancelled {
+                            try? await Task.sleep(nanoseconds: 1_000_000_000)
+                            await model.tickClock()
+                        }
+                    }
+                    .opacity(showStartup ? 0 : 1)
+
+                if showStartup {
+                    MvpnStartupAnimation {
+                        showStartup = false
+                    }
+                    .zIndex(1)
                 }
+            }
         }
     }
 }
@@ -45,6 +56,10 @@ struct RootView: View {
                 QrScanView()
             case .settings:
                 SettingsView()
+            case .splitTunnel:
+                SplitTunnelView()
+            case .backup:
+                BackupView()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -3,6 +3,7 @@ import SwiftUI
 struct TopBar: View {
     var title: String
     var action: String
+    var splitTunnelEnabled: Bool = false
     var onAction: () -> Void
 
     var body: some View {
@@ -15,6 +16,11 @@ struct TopBar: View {
             Text(title)
                 .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(PanelColor.text)
+            if splitTunnelEnabled {
+                Text("⇄")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(PanelColor.accent)
+            }
             Spacer()
             Button(action, action: onAction)
                 .font(.system(size: 17))

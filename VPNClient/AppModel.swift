@@ -13,6 +13,8 @@ enum Screen {
     case importKey
     case scan
     case settings
+    case splitTunnel
+    case backup
 }
 
 @MainActor
@@ -23,11 +25,14 @@ final class AppModel: ObservableObject {
     @Published var draft = ""
     @Published var phase: Phase = .idle
     @Published var error: String?
+    @Published var notice: String?
+    @Published var claimingTrial = false
     @Published var rxBytes: Int64 = 0
     @Published var txBytes: Int64 = 0
     @Published var handshake = "—"
     @Published var connectedSince: Date?
     @Published var now = Date()
+    @Published var storeWarning: String?
 
     let tunnels = TunnelController()
     private let store = ProfileStore()
@@ -38,20 +43,30 @@ final class AppModel: ObservableObject {
         servers.first { $0.id == activeId }
     }
 
+    var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.7.0"
+    }
+
     init() {
         let library = store.load()
         servers = library.servers
         activeId = library.activeId
+        storeWarning = library.warning
+        if let warning = library.warning {
+            error = warning
+        }
         tunnels.onStatus = { [weak self] status in
             Task { @MainActor in
                 self?.apply(status)
             }
         }
         tunnels.prepare()
+        refreshPeerExpiry()
     }
 
     func show(_ screen: Screen) {
         error = nil
+        notice = nil
         if screen == .importKey {
             draft = ""
         }
@@ -61,10 +76,12 @@ final class AppModel: ObservableObject {
     func updateDraft(_ value: String) {
         draft = value
         error = nil
+        notice = nil
     }
 
     func report(_ message: String) {
         error = message
+        notice = nil
     }
 
     func refreshConnection() {
@@ -74,6 +91,7 @@ final class AppModel: ObservableObject {
             connectedSince = storedSince()
             now = Date()
             error = nil
+            refreshPeerExpiry()
         } else if !tunnels.isUp(), phase == .connected {
             rememberSince(nil)
             phase = .idle
@@ -104,7 +122,7 @@ final class AppModel: ObservableObject {
                 if phase != .idle {
                     tunnels.disconnect()
                 }
-                let library = store.add(key)
+                let library = try store.add(key)
                 rememberSince(nil)
                 servers = library.servers
                 activeId = library.activeId
@@ -112,14 +130,77 @@ final class AppModel: ObservableObject {
                 draft = ""
                 phase = .idle
                 error = nil
+                notice = nil
                 rxBytes = 0
                 txBytes = 0
                 handshake = "—"
                 connectedSince = nil
+                refreshPeerExpiry()
             } catch {
                 screen = .importKey
                 draft = raw
                 self.error = (error as? LocalizedError)?.errorDescription ?? "Ключ не распознан"
+                notice = nil
+            }
+        }
+    }
+
+    func claimTrial() {
+        guard !claimingTrial else { return }
+        claimingTrial = true
+        error = nil
+        notice = nil
+        Task {
+            let deviceId = TrialClient.deviceId()
+            guard !deviceId.isEmpty else {
+                claimingTrial = false
+                error = "Не удалось определить устройство"
+                return
+            }
+            do {
+                let raw = try await TrialClient.claim(deviceId: deviceId)
+                let key = try KeyImport.parse(raw)
+                if phase != .idle {
+                    tunnels.disconnect()
+                }
+                let library = try store.add(key)
+                rememberSince(nil)
+                servers = library.servers
+                activeId = library.activeId
+                screen = .home
+                draft = ""
+                phase = .idle
+                error = nil
+                notice = "Тестовый сервер на 1 день, скорость 1 Мбит/с"
+                rxBytes = 0
+                txBytes = 0
+                handshake = "—"
+                connectedSince = nil
+                claimingTrial = false
+                refreshPeerExpiry()
+            } catch {
+                claimingTrial = false
+                notice = nil
+                self.error = (error as? LocalizedError)?.errorDescription
+                    ?? error.localizedDescription
+                    ?? "Не удалось получить тестовый сервер"
+            }
+        }
+    }
+
+    func refreshPeerExpiry() {
+        guard let active else { return }
+        let key = active.key
+        let id = active.id
+        Task {
+            guard let remote = await PeerExpirySync.fetch(key: key), remote.found else { return }
+            guard remote.expiresAtMillis != key.expiresAtMillis else { return }
+            do {
+                let library = try store.setExpiresAt(id: id, expiresAtMillis: remote.expiresAtMillis)
+                servers = library.servers
+                activeId = library.activeId
+            } catch {
+                // Keep local expiry if panel sync fails after a successful fetch parse.
             }
         }
     }
@@ -134,11 +215,17 @@ final class AppModel: ObservableObject {
             handshake = "—"
             connectedSince = nil
         }
-        let library = store.setActive(id)
-        servers = library.servers
-        activeId = library.activeId
-        screen = .home
-        error = nil
+        do {
+            let library = try store.setActive(id)
+            servers = library.servers
+            activeId = library.activeId
+            screen = .home
+            error = nil
+            notice = nil
+            refreshPeerExpiry()
+        } catch {
+            report((error as? LocalizedError)?.errorDescription ?? "Не удалось выбрать сервер")
+        }
     }
 
     func delete(_ id: String) {
@@ -146,20 +233,123 @@ final class AppModel: ObservableObject {
             report("Сначала отключите VPN")
             return
         }
-        let library = store.delete(id)
-        servers = library.servers
-        activeId = library.activeId
+        do {
+            let library = try store.delete(id)
+            servers = library.servers
+            activeId = library.activeId
+            error = nil
+            notice = nil
+        } catch {
+            report((error as? LocalizedError)?.errorDescription ?? "Не удалось удалить сервер")
+        }
+    }
+
+    func setSplitMode(_ mode: AppRouteMode) {
+        guard let active else {
+            report("Сначала выберите сервер")
+            return
+        }
+        guard phase == .idle else {
+            report("Отключите VPN, чтобы изменить раздельное туннелирование")
+            return
+        }
+        saveSplit(active.id, active.splitTunnel.copy(mode: mode))
+    }
+
+    func addBypassDomain(_ input: String) -> Bool {
+        guard let active else {
+            report("Сначала выберите сервер")
+            return false
+        }
+        guard phase == .idle else {
+            report("Отключите VPN, чтобы изменить список сайтов")
+            return false
+        }
+        let domain: String
+        do {
+            domain = try SiteDomain.normalize(input)
+        } catch {
+            report((error as? LocalizedError)?.errorDescription ?? "Некорректный домен сайта")
+            return false
+        }
+        if active.splitTunnel.bypassDomains.contains(domain) {
+            report("Этот сайт уже добавлен")
+            return false
+        }
+        var domains = active.splitTunnel.bypassDomains
+        domains.insert(domain)
+        saveSplit(active.id, active.splitTunnel.copy(bypassDomains: domains))
+        return true
+    }
+
+    func removeBypassDomain(_ domain: String) {
+        guard let active else { return }
+        guard phase == .idle else {
+            report("Отключите VPN, чтобы изменить список сайтов")
+            return
+        }
+        var domains = active.splitTunnel.bypassDomains
+        domains.remove(domain)
+        saveSplit(active.id, active.splitTunnel.copy(bypassDomains: domains))
+    }
+
+    func exportBackupText() -> String? {
+        guard !servers.isEmpty else {
+            report("Нет серверов для сохранения")
+            return nil
+        }
+        do {
+            return try store.exportBackup()
+        } catch {
+            report((error as? LocalizedError)?.errorDescription ?? "Не удалось сохранить конфигурацию")
+            return nil
+        }
+    }
+
+    func onBackupSaved() {
         error = nil
+        notice = "Конфигурация сохранена на телефон"
+    }
+
+    func importBackupText(_ raw: String) {
+        Task {
+            if phase != .idle {
+                tunnels.disconnect()
+                rememberSince(nil)
+            }
+            do {
+                let library = try store.importBackup(raw)
+                servers = library.servers
+                activeId = library.activeId
+                phase = .idle
+                error = nil
+                notice = "Конфигурация загружена (\(library.servers.count))"
+                rxBytes = 0
+                txBytes = 0
+                handshake = "—"
+                connectedSince = nil
+                screen = .backup
+                refreshPeerExpiry()
+            } catch {
+                notice = nil
+                self.error = (error as? LocalizedError)?.errorDescription ?? "Не удалось загрузить конфигурацию"
+            }
+        }
     }
 
     func connect() {
         guard let profile = active, phase == .idle else { return }
         phase = .connecting
         error = nil
+        notice = nil
         screen = .home
         Task {
             do {
-                try await tunnels.connect(conf: profile.key.conf, endpoint: profile.key.endpoint)
+                try await tunnels.connect(
+                    conf: profile.key.conf,
+                    endpoint: profile.key.endpoint,
+                    splitTunnel: profile.splitTunnel
+                )
             } catch {
                 rememberSince(nil)
                 phase = .idle
@@ -180,6 +370,18 @@ final class AppModel: ObservableObject {
         connectedSince = nil
     }
 
+    private func saveSplit(_ id: String, _ settings: SplitTunnelSettings) {
+        do {
+            let library = try store.setSplitTunnel(id: id, settings: settings)
+            servers = library.servers
+            activeId = library.activeId
+            error = nil
+            notice = nil
+        } catch {
+            report((error as? LocalizedError)?.errorDescription ?? "Не удалось сохранить настройки")
+        }
+    }
+
     private func apply(_ status: NEVPNStatus) {
         switch status {
         case .connected:
@@ -187,6 +389,7 @@ final class AppModel: ObservableObject {
                 phase = .connected
                 connectedSince = storedSince()
                 error = nil
+                refreshPeerExpiry()
             }
             now = Date()
         case .connecting, .reasserting:
@@ -233,6 +436,16 @@ final class AppModel: ObservableObject {
         if seconds < 60 { return "\(seconds) с назад" }
         if seconds < 3600 { return "\(seconds / 60) мин назад" }
         return "\(seconds / 3600) ч назад"
+    }
+}
+
+private extension SplitTunnelSettings {
+    func copy(mode: AppRouteMode? = nil, packages: Set<String>? = nil, bypassDomains: Set<String>? = nil) -> SplitTunnelSettings {
+        SplitTunnelSettings(
+            mode: mode ?? self.mode,
+            packages: packages ?? self.packages,
+            bypassDomains: bypassDomains ?? self.bypassDomains
+        )
     }
 }
 

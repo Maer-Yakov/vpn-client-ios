@@ -24,6 +24,19 @@
 		E0000000000000000000011F /* KeyImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000011A /* KeyImport.swift */; };
 		E00000000000000000000121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000120 /* Assets.xcassets */; };
 		E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E00000000000000000000122 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E00000000000000000000201 /* SubscriptionExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000200 /* SubscriptionExpiry.swift */; };
+		E00000000000000000000203 /* SiteDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000202 /* SiteDomain.swift */; };
+		E00000000000000000000205 /* SiteRouteResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000204 /* SiteRouteResolver.swift */; };
+		E00000000000000000000215 /* SiteRouteResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000204 /* SiteRouteResolver.swift */; };
+		E00000000000000000000207 /* RouteExclusions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000206 /* RouteExclusions.swift */; };
+		E00000000000000000000209 /* SplitTunneling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000208 /* SplitTunneling.swift */; };
+		E0000000000000000000020B /* TrialClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000020A /* TrialClient.swift */; };
+		E0000000000000000000020D /* PeerExpirySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000020C /* PeerExpirySync.swift */; };
+		E0000000000000000000020F /* StartupAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000020E /* StartupAnimation.swift */; };
+		E00000000000000000000211 /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000210 /* BackupView.swift */; };
+		E00000000000000000000213 /* SplitTunnelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000212 /* SplitTunnelView.swift */; };
+		E00000000000000000000216 /* SubscriptionExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000200 /* SubscriptionExpiry.swift */; };
+		E00000000000000000000217 /* SiteDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000202 /* SiteDomain.swift */; };
 /* End PBXBuildFile section */
 /* Begin PBXFileReference section */
 		E00000000000000000000123 /* VPNClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPNClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +57,16 @@
 		E0000000000000000000011A /* KeyImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImport.swift; sourceTree = "<group>"; };
 		E0000000000000000000011C /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		E00000000000000000000120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E00000000000000000000200 /* SubscriptionExpiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionExpiry.swift; sourceTree = "<group>"; };
+		E00000000000000000000202 /* SiteDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteDomain.swift; sourceTree = "<group>"; };
+		E00000000000000000000204 /* SiteRouteResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRouteResolver.swift; sourceTree = "<group>"; };
+		E00000000000000000000206 /* RouteExclusions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteExclusions.swift; sourceTree = "<group>"; };
+		E00000000000000000000208 /* SplitTunneling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTunneling.swift; sourceTree = "<group>"; };
+		E0000000000000000000020A /* TrialClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialClient.swift; sourceTree = "<group>"; };
+		E0000000000000000000020C /* PeerExpirySync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerExpirySync.swift; sourceTree = "<group>"; };
+		E0000000000000000000020E /* StartupAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAnimation.swift; sourceTree = "<group>"; };
+		E00000000000000000000210 /* BackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
+		E00000000000000000000212 /* SplitTunnelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTunnelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXGroup section */
 		E00000000000000000000021 /* VPNClient */ = {
@@ -61,6 +84,11 @@
 				E00000000000000000000112 /* Theme.swift */,
 				E00000000000000000000114 /* TunnelController.swift */,
 				E00000000000000000000116 /* VPNClientApp.swift */,
+				E0000000000000000000020A /* TrialClient.swift */,
+				E0000000000000000000020C /* PeerExpirySync.swift */,
+				E0000000000000000000020E /* StartupAnimation.swift */,
+				E00000000000000000000210 /* BackupView.swift */,
+				E00000000000000000000212 /* SplitTunnelView.swift */,
 				E00000000000000000000120 /* Assets.xcassets */,
 			);
 			path = VPNClient;
@@ -79,6 +107,11 @@
 			children = (
 				E00000000000000000000118 /* AppGroup.swift */,
 				E0000000000000000000011A /* KeyImport.swift */,
+				E00000000000000000000200 /* SubscriptionExpiry.swift */,
+				E00000000000000000000202 /* SiteDomain.swift */,
+				E00000000000000000000204 /* SiteRouteResolver.swift */,
+				E00000000000000000000206 /* RouteExclusions.swift */,
+				E00000000000000000000208 /* SplitTunneling.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -123,6 +156,16 @@
 				E00000000000000000000117 /* VPNClientApp.swift in Sources */,
 				E00000000000000000000119 /* AppGroup.swift in Sources */,
 				E0000000000000000000011B /* KeyImport.swift in Sources */,
+				E00000000000000000000201 /* SubscriptionExpiry.swift in Sources */,
+				E00000000000000000000203 /* SiteDomain.swift in Sources */,
+				E00000000000000000000205 /* SiteRouteResolver.swift in Sources */,
+				E00000000000000000000207 /* RouteExclusions.swift in Sources */,
+				E00000000000000000000209 /* SplitTunneling.swift in Sources */,
+				E0000000000000000000020B /* TrialClient.swift in Sources */,
+				E0000000000000000000020D /* PeerExpirySync.swift in Sources */,
+				E0000000000000000000020F /* StartupAnimation.swift in Sources */,
+				E00000000000000000000211 /* BackupView.swift in Sources */,
+				E00000000000000000000213 /* SplitTunnelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +176,9 @@
 				E0000000000000000000011D /* PacketTunnelProvider.swift in Sources */,
 				E0000000000000000000011E /* AppGroup.swift in Sources */,
 				E0000000000000000000011F /* KeyImport.swift in Sources */,
+				E00000000000000000000215 /* SiteRouteResolver.swift in Sources */,
+				E00000000000000000000216 /* SubscriptionExpiry.swift in Sources */,
+				E00000000000000000000217 /* SiteDomain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,16 +355,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = VPNClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = VPN;
+				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
 
 			};
 			name = Debug;
@@ -330,16 +376,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VPNClient/VPNClient.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = VPNClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = VPN;
+				INFOPLIST_KEY_CFBundleDisplayName = Mvpn;
 
 			};
 			name = Release;
@@ -350,11 +396,11 @@
 
 				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client.tunnel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -370,11 +416,11 @@
 
 				CODE_SIGN_ENTITLEMENTS = PacketTunnel/PacketTunnel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
 				PRODUCT_BUNDLE_IDENTIFIER = app.vpnadmin.client.tunnel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
