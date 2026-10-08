@@ -9,7 +9,7 @@ enum SiteDomain {
             throw SiteDomainError.message("Введите домен сайта")
         }
 
-        var components = URLComponents(string: value.contains("://") ? value : "https://\(value)")
+        let components = URLComponents(string: value.contains("://") ? value : "https://\(value)")
         guard let components, let scheme = components.scheme?.lowercased(), scheme == "http" || scheme == "https" else {
             throw SiteDomainError.message("Укажите домен, например example.com")
         }
