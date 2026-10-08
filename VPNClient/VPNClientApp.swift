@@ -16,7 +16,7 @@ struct VPNClientApp: App {
                     .onOpenURL { url in
                         model.importText(url.absoluteString)
                     }
-                    .onChange(of: scenePhase) { _, phase in
+                    .onChange(of: scenePhase) { phase in
                         if phase == .active {
                             model.refreshConnection()
                         }
