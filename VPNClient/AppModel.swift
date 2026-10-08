@@ -60,8 +60,10 @@ final class AppModel: ObservableObject {
                 self?.apply(status)
             }
         }
+        #if !targetEnvironment(simulator)
         tunnels.prepare()
         refreshPeerExpiry()
+        #endif
     }
 
     func show(_ screen: Screen) {
