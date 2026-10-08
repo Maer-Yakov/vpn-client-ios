@@ -1,9 +1,9 @@
 import SwiftUI
+import UIKit
 
 @main
 struct VPNClientApp: App {
     @StateObject private var model = AppModel()
-    @Environment(\.scenePhase) private var scenePhase
     @State private var showStartup = !Self.isSimulator
 
     /// Network Extension / splash quirks are unreliable in Simulator (incl. iOS 26.x).
