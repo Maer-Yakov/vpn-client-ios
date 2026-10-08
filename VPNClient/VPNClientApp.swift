@@ -16,7 +16,7 @@ struct VPNClientApp: App {
                     .onOpenURL { url in
                         model.importText(url.absoluteString)
                     }
-                    .onChange(of: scenePhase) { phase in
+                    .onChange(of: scenePhase) { _, phase in
                         if phase == .active {
                             model.refreshConnection()
                         }
@@ -27,13 +27,23 @@ struct VPNClientApp: App {
                             await model.tickClock()
                         }
                     }
-                    .opacity(showStartup ? 0 : 1)
 
                 if showStartup {
                     MvpnStartupAnimation {
-                        showStartup = false
+                        withAnimation(.easeOut(duration: 0.25)) {
+                            showStartup = false
+                        }
                     }
+                    .transition(.opacity)
                     .zIndex(1)
+                }
+            }
+            .background(PanelColor.bg.ignoresSafeArea())
+            .task {
+                // Hard fallback: never stay on splash longer than 2.5s (fixes black screen on simulator).
+                try? await Task.sleep(nanoseconds: 2_500_000_000)
+                if showStartup {
+                    showStartup = false
                 }
             }
         }
