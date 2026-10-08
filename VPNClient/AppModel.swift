@@ -183,9 +183,8 @@ final class AppModel: ObservableObject {
             } catch {
                 claimingTrial = false
                 notice = nil
-                self.error = (error as? LocalizedError)?.errorDescription
-                    ?? error.localizedDescription
-                    ?? "Не удалось получить тестовый сервер"
+                let detail = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+                self.error = detail.isEmpty ? "Не удалось получить тестовый сервер" : detail
             }
         }
     }
