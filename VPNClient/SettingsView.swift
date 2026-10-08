@@ -70,7 +70,7 @@ struct SettingsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Button {
-                    SupportChat.open()
+                    _ = SupportChat.open()
                 } label: {
                     Text("Чат поддержки")
                         .font(.system(size: 17, weight: .semibold))
