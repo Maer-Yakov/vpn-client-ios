@@ -4,7 +4,16 @@ import SwiftUI
 struct VPNClientApp: App {
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
-    @State private var showStartup = true
+    @State private var showStartup = !Self.isSimulator
+
+    /// Network Extension / splash quirks are unreliable in Simulator (incl. iOS 26.x).
+    private static var isSimulator: Bool {
+        #if targetEnvironment(simulator)
+        true
+        #else
+        false
+        #endif
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -16,7 +25,7 @@ struct VPNClientApp: App {
                     .onOpenURL { url in
                         model.importText(url.absoluteString)
                     }
-                    .onChange(of: scenePhase) { phase in
+                    .onChange(of: scenePhase) { _, phase in
                         if phase == .active {
                             model.refreshConnection()
                         }
@@ -38,9 +47,10 @@ struct VPNClientApp: App {
                     .zIndex(1)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(PanelColor.bg.ignoresSafeArea())
             .task {
-                // Hard fallback: never stay on splash longer than 2.5s (fixes black screen on simulator).
+                guard showStartup else { return }
                 try? await Task.sleep(nanoseconds: 2_500_000_000)
                 if showStartup {
                     showStartup = false
