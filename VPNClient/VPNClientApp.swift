@@ -25,10 +25,8 @@ struct VPNClientApp: App {
                     .onOpenURL { url in
                         model.importText(url.absoluteString)
                     }
-                    .onChange(of: scenePhase) { _, phase in
-                        if phase == .active {
-                            model.refreshConnection()
-                        }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                        model.refreshConnection()
                     }
                     .task {
                         while !Task.isCancelled {
