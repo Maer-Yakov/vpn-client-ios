@@ -110,7 +110,7 @@ struct HomeView: View {
                     .padding(.top, 10)
             }
             Button("Чат поддержки") {
-                SupportChat.open()
+                _ = SupportChat.open()
             }
             .font(.system(size: 17))
             .foregroundStyle(PanelColor.accent)
