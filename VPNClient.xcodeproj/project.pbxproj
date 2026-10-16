@@ -459,6 +459,7 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LIBRARY_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Vendor/amneziawg-apple/Sources/WireGuardKitGo/out";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
@@ -478,6 +479,7 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PacketTunnel/Info.plist;
+				LIBRARY_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Vendor/amneziawg-apple/Sources/WireGuardKitGo/out";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				OTHER_LDFLAGS = "-framework NetworkExtension";
