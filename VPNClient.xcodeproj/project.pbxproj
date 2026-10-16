@@ -24,6 +24,9 @@
 		E0000000000000000000011F /* KeyImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000011A /* KeyImport.swift */; };
 		E00000000000000000000121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000120 /* Assets.xcassets */; };
 		E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E00000000000000000000122 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E00000000000000000000202 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000201 /* WireGuardKit */; };
+		E00000000000000000000204 /* TunnelConfiguration+WgQuickConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000203 /* TunnelConfiguration+WgQuickConfig.swift */; };
+		E00000000000000000000206 /* String+ArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000205 /* String+ArrayConversion.swift */; };
 /* End PBXBuildFile section */
 /* Begin PBXFileReference section */
 		E00000000000000000000123 /* VPNClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPNClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +47,8 @@
 		E0000000000000000000011A /* KeyImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImport.swift; sourceTree = "<group>"; };
 		E0000000000000000000011C /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		E00000000000000000000120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E00000000000000000000203 /* TunnelConfiguration+WgQuickConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TunnelConfiguration+WgQuickConfig.swift"; sourceTree = "<group>"; };
+		E00000000000000000000205 /* String+ArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ArrayConversion.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXGroup section */
 		E00000000000000000000021 /* VPNClient */ = {
@@ -70,6 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				E0000000000000000000011C /* PacketTunnelProvider.swift */,
+				E00000000000000000000203 /* TunnelConfiguration+WgQuickConfig.swift */,
+				E00000000000000000000205 /* String+ArrayConversion.swift */,
 			);
 			path = PacketTunnel;
 			sourceTree = "<group>";
@@ -133,6 +140,8 @@
 				E0000000000000000000011D /* PacketTunnelProvider.swift in Sources */,
 				E0000000000000000000011E /* AppGroup.swift in Sources */,
 				E0000000000000000000011F /* KeyImport.swift in Sources */,
+				E00000000000000000000204 /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
+				E00000000000000000000206 /* String+ArrayConversion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E00000000000000000000202 /* WireGuardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,13 +216,33 @@
 			buildRules = (
 			);
 			dependencies = (
+				E00000000000000000000053 /* PBXTargetDependency */,
 			);
 			name = PacketTunnel;
+			packageProductDependencies = (
+				E00000000000000000000201 /* WireGuardKit */,
+			);
 			productName = PacketTunnel;
 			productReference = E00000000000000000000122 /* PacketTunnel.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
+/* Begin PBXLegacyTarget section */
+		E00000000000000000000004 /* WireGuardGoBridgeiOS */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = E00000000000000000000043 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "${BUILD_DIR%Build/*}SourcePackages/checkouts/amneziawg-apple/Sources/WireGuardKitGo";
+			dependencies = (
+			);
+			name = WireGuardGoBridgeiOS;
+			passBuildSettingsInEnvironment = 1;
+			productName = WireGuardGoBridgeiOS;
+		};
+/* End PBXLegacyTarget section */
 /* Begin PBXProject section */
 		E00000000000000000000001 /* Project object */ = {
 			isa = PBXProject;
@@ -222,6 +252,7 @@
 				TargetAttributes = {
 					E00000000000000000000002 = { CreatedOnToolsVersion = 16.0; };
 					E00000000000000000000003 = { CreatedOnToolsVersion = 16.0; };
+					E00000000000000000000004 = { CreatedOnToolsVersion = 16.0; };
 				};
 			};
 			buildConfigurationList = E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */;
@@ -233,12 +264,16 @@
 				Base,
 			);
 			mainGroup = E00000000000000000000025;
+			packageReferences = (
+				E00000000000000000000200 /* XCRemoteSwiftPackageReference "amneziawg-apple" */,
+			);
 			productRefGroup = E00000000000000000000024;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				E00000000000000000000002 /* VPNClient */,
 				E00000000000000000000003 /* PacketTunnel */,
+				E00000000000000000000004 /* WireGuardGoBridgeiOS */,
 			);
 		};
 /* End PBXProject section */
@@ -250,12 +285,24 @@
 			remoteGlobalIDString = E00000000000000000000003;
 			remoteInfo = PacketTunnel;
 		};
+		E00000000000000000000054 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E00000000000000000000004;
+			remoteInfo = WireGuardGoBridgeiOS;
+		};
 /* End PBXContainerItemProxy section */
 /* Begin PBXTargetDependency section */
 		E00000000000000000000051 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E00000000000000000000003 /* PacketTunnel */;
 			targetProxy = E00000000000000000000052 /* PBXContainerItemProxy */;
+		};
+		E00000000000000000000053 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E00000000000000000000004 /* WireGuardGoBridgeiOS */;
+			targetProxy = E00000000000000000000054 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 /* Begin XCBuildConfiguration section */
@@ -384,6 +431,22 @@
 			};
 			name = Release;
 		};
+		E00000000000000000000067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = WireGuardGoBridgeiOS;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E00000000000000000000068 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = WireGuardGoBridgeiOS;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 /* Begin XCConfigurationList section */
 		E00000000000000000000040 /* Build configuration list for PBXProject "VPNClient" */ = {
@@ -413,7 +476,33 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E00000000000000000000043 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E00000000000000000000067 /* Debug */,
+				E00000000000000000000068 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+/* Begin XCRemoteSwiftPackageReference section */
+		E00000000000000000000200 /* XCRemoteSwiftPackageReference "amneziawg-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amnezia-vpn/amneziawg-apple";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.20260814;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+/* Begin XCSwiftPackageProductDependency section */
+		E00000000000000000000201 /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E00000000000000000000200 /* XCRemoteSwiftPackageReference "amneziawg-apple" */;
+			productName = WireGuardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E00000000000000000000001 /* Project object */;
 }

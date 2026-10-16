@@ -13,6 +13,10 @@ struct ServerLibrary {
 struct ProfileStore {
     private let file: URL
 
+    init(file: URL) {
+        self.file = file
+    }
+
     init(fileManager: FileManager = .default) {
         let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.temporaryDirectory
