@@ -27,9 +27,9 @@
 		E00000000000000000000124 /* PacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E00000000000000000000122 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E00000000000000000000201 /* SubscriptionExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000200 /* SubscriptionExpiry.swift */; };
 		E00000000000000000000203 /* SiteDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000202 /* SiteDomain.swift */; };
+		E00000000000000000000501 /* TrialResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000500 /* TrialResponse.swift */; };
 		E00000000000000000000205 /* SiteRouteResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000204 /* SiteRouteResolver.swift */; };
 		E00000000000000000000215 /* SiteRouteResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000204 /* SiteRouteResolver.swift */; };
-		E00000000000000000000207 /* RouteExclusions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000206 /* RouteExclusions.swift */; };
 		E00000000000000000000209 /* SplitTunneling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000208 /* SplitTunneling.swift */; };
 		E0000000000000000000020B /* TrialClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000020A /* TrialClient.swift */; };
 		E0000000000000000000020D /* PeerExpirySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0000000000000000000020C /* PeerExpirySync.swift */; };
@@ -70,8 +70,8 @@
 		E00000000000000000000120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E00000000000000000000200 /* SubscriptionExpiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionExpiry.swift; sourceTree = "<group>"; };
 		E00000000000000000000202 /* SiteDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteDomain.swift; sourceTree = "<group>"; };
+		E00000000000000000000500 /* TrialResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialResponse.swift; sourceTree = "<group>"; };
 		E00000000000000000000204 /* SiteRouteResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRouteResolver.swift; sourceTree = "<group>"; };
-		E00000000000000000000206 /* RouteExclusions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteExclusions.swift; sourceTree = "<group>"; };
 		E00000000000000000000208 /* SplitTunneling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTunneling.swift; sourceTree = "<group>"; };
 		E0000000000000000000020A /* TrialClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialClient.swift; sourceTree = "<group>"; };
 		E0000000000000000000020C /* PeerExpirySync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerExpirySync.swift; sourceTree = "<group>"; };
@@ -141,8 +141,8 @@
 				E0000000000000000000011A /* KeyImport.swift */,
 				E00000000000000000000200 /* SubscriptionExpiry.swift */,
 				E00000000000000000000202 /* SiteDomain.swift */,
+				E00000000000000000000500 /* TrialResponse.swift */,
 				E00000000000000000000204 /* SiteRouteResolver.swift */,
-				E00000000000000000000206 /* RouteExclusions.swift */,
 				E00000000000000000000208 /* SplitTunneling.swift */,
 			);
 			path = Shared;
@@ -310,8 +310,8 @@
 				E0000000000000000000011B /* KeyImport.swift in Sources */,
 				E00000000000000000000201 /* SubscriptionExpiry.swift in Sources */,
 				E00000000000000000000203 /* SiteDomain.swift in Sources */,
+				E00000000000000000000501 /* TrialResponse.swift in Sources */,
 				E00000000000000000000205 /* SiteRouteResolver.swift in Sources */,
-				E00000000000000000000207 /* RouteExclusions.swift in Sources */,
 				E00000000000000000000209 /* SplitTunneling.swift in Sources */,
 				E0000000000000000000020B /* TrialClient.swift in Sources */,
 				E0000000000000000000020D /* PeerExpirySync.swift in Sources */,

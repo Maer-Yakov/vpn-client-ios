@@ -18,6 +18,14 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         #if canImport(WireGuardKit)
         do {
             let configuration = try TunnelConfiguration(fromWgQuickConfig: conf)
+            // Сайты «в обход VPN»: IP, разрешённые приложением перед подключением,
+            // уходят в NEPacketTunnelNetworkSettings.excludedRoutes (AllowedIPs не трогаем).
+            let bypass = AppGroup.readBypassRoutes().compactMap { IPAddressRange(from: $0.cidr) }
+            if !bypass.isEmpty {
+                for index in configuration.peers.indices {
+                    configuration.peers[index].excludeIPs = bypass
+                }
+            }
             let adapter = WireGuardAdapter(with: self) { _, message in
                 os_log("%{public}@", message)
             }

@@ -1,23 +1,32 @@
 import Foundation
+import Security
 import UIKit
 
 enum TrialClient {
     static let panelURL = "http://85.137.164.156:8080"
     private static let deviceKey = "mvpn_device_id"
+    private static let keychainService = "app.vpnadmin.client.trial"
 
+    /// Идентификатор хранится в Keychain, чтобы переживать удаление приложения
+    /// (иначе после переустановки можно было бы снова получить «единственный» тест).
+    /// Если Keychain недоступен (например, при установке без подписи), используется UserDefaults.
     static func deviceId() -> String {
-        if let saved = UserDefaults.standard.string(forKey: deviceKey), !saved.isEmpty {
+        if let saved = keychainRead(), !saved.isEmpty {
             return saved
         }
-        let generated = UIDevice.current.identifierForVendor?.uuidString
-            ?? UUID().uuidString
+        if let saved = UserDefaults.standard.string(forKey: deviceKey), !saved.isEmpty {
+            keychainWrite(saved)
+            return saved
+        }
+        let generated = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
         UserDefaults.standard.set(generated, forKey: deviceKey)
+        keychainWrite(generated)
         return generated
     }
 
-    static func claim(deviceId: String) async throws -> String {
+    static func claim(deviceId: String, session: URLSession = .shared) async throws -> String {
         guard let url = URL(string: "\(panelURL)/api/public/trial") else {
-            throw TrialClientError.message("Не удалось получить тестовый сервер")
+            throw TrialResponseError.message(TrialResponse.genericFailure)
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -27,40 +36,42 @@ enum TrialClient {
         request.setValue("Mvpn-iOS", forHTTPHeaderField: "User-Agent")
         request.httpBody = try JSONSerialization.data(withJSONObject: ["device_id": deviceId])
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            throw TrialResponseError.message("Нет связи с сервером. Проверьте интернет и повторите попытку")
+        }
         let code = (response as? HTTPURLResponse)?.statusCode ?? 0
-        let body = String(decoding: data, as: UTF8.self)
-        guard (200...299).contains(code) else {
-            throw TrialClientError.message(messageOf(body: body, code: code))
-        }
-        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let config = json["config"] as? String,
-              config.hasPrefix("vpn://") else {
-            throw TrialClientError.message("Сервер не прислал ключ")
-        }
-        return config
+        return try TrialResponse.parse(statusCode: code, body: data)
     }
 
-    private static func messageOf(body: String, code: Int) -> String {
-        if let data = body.data(using: .utf8),
-           let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-           let detail = json["detail"] as? String,
-           !detail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return detail
-        }
-        if code == 409 {
-            return "Тестовый сервер можно получить только один раз"
-        }
-        return "Не удалось получить тестовый сервер"
+    // MARK: Keychain
+
+    private static func keychainQuery() -> [String: Any] {
+        [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: deviceKey,
+        ]
     }
-}
 
-enum TrialClientError: Error, LocalizedError {
-    case message(String)
+    private static func keychainRead() -> String? {
+        var query = keychainQuery()
+        query[kSecReturnData as String] = true
+        query[kSecMatchLimit as String] = kSecMatchLimitOne
+        var result: AnyObject?
+        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
+              let data = result as? Data else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
 
-    var errorDescription: String? {
-        switch self {
-        case .message(let text): return text
-        }
+    private static func keychainWrite(_ value: String) {
+        var attributes = keychainQuery()
+        attributes[kSecValueData as String] = Data(value.utf8)
+        attributes[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+        // Сбой записи не критичен: останется UserDefaults.
+        _ = SecItemAdd(attributes as CFDictionary, nil)
     }
 }

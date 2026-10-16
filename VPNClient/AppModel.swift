@@ -263,18 +263,6 @@ final class AppModel: ObservableObject {
         }
     }
 
-    func setSplitMode(_ mode: AppRouteMode) {
-        guard let active else {
-            report("Сначала выберите сервер")
-            return
-        }
-        guard phase == .idle else {
-            report("Отключите VPN, чтобы изменить раздельное туннелирование")
-            return
-        }
-        saveSplit(active.id, active.splitTunnel.copy(mode: mode))
-    }
-
     func addBypassDomain(_ input: String) -> Bool {
         guard let active else {
             report("Сначала выберите сервер")

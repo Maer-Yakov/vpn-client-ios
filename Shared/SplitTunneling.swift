@@ -16,19 +16,9 @@ struct SplitTunnelSettings: Equatable {
     var packages: Set<String> = []
     var bypassDomains: Set<String> = []
 
+    /// На iOS работает только обход сайтов. Режим и пакеты хранятся для совместимости с резервными копиями Android.
     var isEnabled: Bool {
-        mode != .allTraffic || !bypassDomains.isEmpty
-    }
-
-    /// iOS consumer apps cannot do Android-style per-app routing; packages are kept for backup parity.
-    func applyTo(_ configuration: String) throws -> String {
-        if mode == .allTraffic { return configuration }
-        let selected = packages.filter(Self.isValidPackageName).sorted()
-        guard !selected.isEmpty else {
-            throw SiteDomainError.message("Выберите хотя бы одно приложение")
-        }
-        // Per-app directives are Android-only; keep conf unchanged on iOS.
-        return configuration
+        !bypassDomains.isEmpty
     }
 
     static func isValidPackageName(_ value: String) -> Bool {

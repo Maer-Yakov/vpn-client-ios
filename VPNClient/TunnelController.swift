@@ -24,10 +24,9 @@ final class TunnelController: ObservableObject {
     }
 
     func connect(conf: String, endpoint: String, splitTunnel: SplitTunnelSettings = SplitTunnelSettings()) async throws {
-        let routedConf = try splitTunnel.applyTo(conf)
+        // Сайты в обход разрешаем до подъёма туннеля; расширение применит их как excludedRoutes.
         let exclusions = try SiteRouteResolver.resolve(domains: splitTunnel.bypassDomains)
-        let finalConf = try RouteExclusions.apply(exclusions: exclusions, to: routedConf)
-        try AppGroup.saveConfig(finalConf)
+        try AppGroup.saveConfig(conf)
         try AppGroup.saveBypassRoutes(exclusions)
         let manager = try await loadOrCreate()
         let proto = NETunnelProviderProtocol()

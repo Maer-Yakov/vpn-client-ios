@@ -22,7 +22,7 @@ struct SplitTunnelView: View {
                     .font(.system(size: 13))
                     .foregroundStyle(PanelColor.muted)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("На iPhone недоступен Android-режим по приложениям. Добавленные ниже сайты всегда идут в обход VPN.")
+                Text("iOS не позволяет выбирать приложения. Добавленные ниже сайты идут в обход VPN, остальной трафик через VPN.")
                     .font(.system(size: 13))
                     .foregroundStyle(PanelColor.muted)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -31,32 +31,6 @@ struct SplitTunnelView: View {
                         .font(.system(size: 13))
                         .foregroundStyle(PanelColor.muted)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
-
-                ForEach(AppRouteMode.allCases, id: \.rawValue) { mode in
-                    let title: String = {
-                        switch mode {
-                        case .allTraffic: return "Весь трафик через VPN"
-                        case .selectedThroughVpn: return "Только выбранные приложения через VPN (Android)"
-                        case .selectedBypassVpn: return "Выбранные приложения в обход VPN (Android)"
-                        }
-                    }()
-                    Button {
-                        model.setSplitMode(mode)
-                    } label: {
-                        HStack(spacing: 10) {
-                            Image(systemName: settings.mode == mode ? "largecircle.fill.circle" : "circle")
-                                .foregroundStyle(settings.mode == mode ? PanelColor.accent : PanelColor.muted)
-                            Text(title)
-                                .font(.system(size: 14))
-                                .foregroundStyle(PanelColor.text)
-                                .multilineTextAlignment(.leading)
-                            Spacer()
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(!canEdit)
                 }
 
                 Text("Сайты в обход VPN")
