@@ -21,10 +21,13 @@ struct ProfileStore {
     private let fileManager: FileManager
 
     init(fileManager: FileManager = .default) {
-        self.fileManager = fileManager
         let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.temporaryDirectory
-        let folder = base.appendingPathComponent("VPNClient", isDirectory: true)
+        self.init(folder: base.appendingPathComponent("VPNClient", isDirectory: true), fileManager: fileManager)
+    }
+
+    init(folder: URL, fileManager: FileManager = .default) {
+        self.fileManager = fileManager
         try? fileManager.createDirectory(at: folder, withIntermediateDirectories: true)
         file = folder.appendingPathComponent("servers.json")
         temporaryFile = folder.appendingPathComponent("servers.json.tmp")

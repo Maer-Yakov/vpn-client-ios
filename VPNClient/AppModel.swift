@@ -33,6 +33,7 @@ final class AppModel: ObservableObject {
     @Published var connectedSince: Date?
     @Published var now = Date()
     @Published var storeWarning: String?
+    @Published var pendingLink: String?
 
     let tunnels = TunnelController()
     private let store = ProfileStore()
@@ -115,6 +116,23 @@ final class AppModel: ObservableObject {
             txBytes = snapshot.txBytes
             handshake = formatHandshake(snapshot.handshakeEpochMillis)
         }
+    }
+
+    /// Ссылка из внешнего приложения: сначала спрашиваем пользователя, чтобы чужая
+    /// ссылка не подменяла сервер и не рвала активное подключение.
+    func offerLink(_ raw: String) {
+        guard raw.lowercased().hasPrefix("vpn://") else { return }
+        pendingLink = raw
+    }
+
+    func confirmPendingLink() {
+        guard let link = pendingLink else { return }
+        pendingLink = nil
+        importText(link)
+    }
+
+    func dismissPendingLink() {
+        pendingLink = nil
     }
 
     func importText(_ raw: String) {

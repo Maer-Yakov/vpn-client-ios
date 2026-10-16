@@ -39,6 +39,10 @@
 		E00000000000000000000216 /* SubscriptionExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000200 /* SubscriptionExpiry.swift */; };
 		E00000000000000000000217 /* SiteDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000202 /* SiteDomain.swift */; };
 		E00000000000000000000301 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000311 /* WireGuardKit */; };
+		E00000000000000000000401 /* TunnelConfiguration+WgQuickConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000400 /* TunnelConfiguration+WgQuickConfig.swift */; };
+		E00000000000000000000403 /* String+ArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000402 /* String+ArrayConversion.swift */; };
+		E00000000000000000000401 /* TunnelConfiguration+WgQuickConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000400 /* TunnelConfiguration+WgQuickConfig.swift */; };
+		E00000000000000000000403 /* String+ArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000402 /* String+ArrayConversion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +63,10 @@
 		E00000000000000000000118 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
 		E0000000000000000000011A /* KeyImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyImport.swift; sourceTree = "<group>"; };
 		E0000000000000000000011C /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		E00000000000000000000400 /* TunnelConfiguration+WgQuickConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TunnelConfiguration+WgQuickConfig.swift"; sourceTree = "<group>"; };
+		E00000000000000000000402 /* String+ArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ArrayConversion.swift"; sourceTree = "<group>"; };
+		E00000000000000000000400 /* TunnelConfiguration+WgQuickConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TunnelConfiguration+WgQuickConfig.swift"; sourceTree = "<group>"; };
+		E00000000000000000000402 /* String+ArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ArrayConversion.swift"; sourceTree = "<group>"; };
 		E00000000000000000000120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E00000000000000000000200 /* SubscriptionExpiry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionExpiry.swift; sourceTree = "<group>"; };
 		E00000000000000000000202 /* SiteDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteDomain.swift; sourceTree = "<group>"; };
@@ -120,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				E0000000000000000000011C /* PacketTunnelProvider.swift */,
+				E00000000000000000000400 /* TunnelConfiguration+WgQuickConfig.swift */,
+				E00000000000000000000402 /* String+ArrayConversion.swift */,
 			);
 			path = PacketTunnel;
 			sourceTree = "<group>";
@@ -316,6 +326,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0000000000000000000011D /* PacketTunnelProvider.swift in Sources */,
+				E00000000000000000000401 /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
+				E00000000000000000000403 /* String+ArrayConversion.swift in Sources */,
 				E0000000000000000000011E /* AppGroup.swift in Sources */,
 				E0000000000000000000011F /* KeyImport.swift in Sources */,
 				E00000000000000000000215 /* SiteRouteResolver.swift in Sources */,

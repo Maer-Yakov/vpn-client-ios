@@ -1,0 +1,65 @@
+name: iOS
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Unit tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: swift test
+        run: swift test
+
+  build:
+    name: Build unsigned IPA
+    runs-on: macos-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      # WireGuardKitGo собирается через Makefile на Go (go.mod требует свежий Go).
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project VPNClient.xcodeproj \
+            -scheme VPNClient \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            | tee xcodebuild.log
+
+      # Без подписи Xcode не вшивает entitlements. ldid добавляет их в бинарники, чтобы
+      # TrollStore (или другая подпись) увидел packet-tunnel-provider и App Group.
+      - name: Package IPA
+        run: |
+          brew install ldid
+          APP=build/Build/Products/Release-iphoneos/VPNClient.app
+          ldid -SPacketTunnel/PacketTunnel.entitlements "$APP/PlugIns/PacketTunnel.appex/PacketTunnel"
+          ldid -SVPNClient/VPNClient.entitlements "$APP/VPNClient"
+          rm -rf Payload && mkdir Payload
+          cp -R "$APP" Payload/
+          zip -qry VPNClient.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VPNClient-unsigned-ipa
+          path: VPNClient.ipa
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: xcodebuild-log
+          path: xcodebuild.log

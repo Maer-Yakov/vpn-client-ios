@@ -43,7 +43,7 @@ extension KeyImportError: LocalizedError {
 enum KeyImport {
     private static let uriPattern = try! NSRegularExpression(pattern: "vpn://[A-Za-z0-9_\\-=]+")
     private static let obfuscation = ["Jc", "Jmin", "Jmax", "S1", "S2", "H1", "I1"]
-    private static let maxImportChars = 512 * 1024
+    static let maxImportChars = 512 * 1024
 
     static func parse(_ raw: String) throws -> ImportedKey {
         if raw.count > maxImportChars {
@@ -114,12 +114,31 @@ enum KeyImport {
         guard (1...1_000_000).contains(rawLen) else {
             throw KeyImportError.damaged
         }
-        let compressed = bytes.subdata(in: 4..<bytes.count)
+        let compressed = deflateBody(bytes.subdata(in: 4..<bytes.count))
         let inflated = try inflate(compressed, rawLen: rawLen)
         guard let json = String(data: inflated, encoding: .utf8) else {
             throw KeyImportError.damaged
         }
         return try extractConf(json)
+    }
+
+    /// Amnezia сжимает через qCompress: 4 байта длины, затем поток zlib (2 байта заголовка,
+    /// deflate, 4 байта Adler-32). `COMPRESSION_ZLIB` из Apple ждёт «сырой» deflate (RFC 1951),
+    /// поэтому заголовок и контрольную сумму нужно убрать.
+    static func deflateBody(_ data: Data) -> Data {
+        let bytes = [UInt8](data)
+        guard bytes.count > 6 else { return data }
+        let cmf = Int(bytes[0])
+        let flg = Int(bytes[1])
+        let isZlib = (cmf & 0x0F) == 8 && ((cmf << 8) | flg) % 31 == 0
+        guard isZlib else { return data }
+        var start = 2
+        if flg & 0x20 != 0 {
+            start += 4
+        }
+        let end = bytes.count - 4
+        guard end > start else { return data }
+        return Data(bytes[start..<end])
     }
 
     private static func inflate(_ data: Data, rawLen: Int) throws -> Data {
@@ -164,7 +183,7 @@ enum KeyImport {
                 }
                 let rank: Int
                 switch key {
-                case "amneziawg": rank = 0
+                case "awg", "amneziawg": rank = 0
                 case "wireguard": rank = 1
                 default: rank = 5
                 }
